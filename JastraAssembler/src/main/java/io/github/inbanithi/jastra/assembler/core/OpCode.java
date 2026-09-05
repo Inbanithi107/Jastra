@@ -10,4 +10,8 @@ public final class OpCode {
 
     public static byte PRINT = (byte) 0xA0;
 
+    public static byte CALL = 0x60;
+
+    public static byte RETURN = 0x61;
+
 }
