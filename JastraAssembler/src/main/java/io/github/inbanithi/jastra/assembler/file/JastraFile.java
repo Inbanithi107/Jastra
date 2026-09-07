@@ -1,9 +1,9 @@
 package io.github.inbanithi.jastra.assembler.file;
 
 import io.github.inbanithi.jastra.assembler.core.ByteCodeGenerator;
-import io.github.inbanithi.jastra.assembler.core.Constant;
 import io.github.inbanithi.jastra.assembler.function.FunctionLayout;
-import io.github.inbanithi.jastra.assembler.function.JastraFunction;
+import io.github.inbanithi.jastra.specification.core.Constant;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,30 +18,31 @@ public class JastraFile {
 
     private List<Constant> constants;
 
-    private List<FunctionLayout> layouts;
-
     public int offset = 0;
+
+    private boolean layoutCalculated = false;
 
     public JastraFile(String name) throws FileNotFoundException {
         this.name = name;
         this.functions = new ArrayList<>();
         this.constants = new ArrayList<>();
-        this.layouts = new ArrayList<>();
     }
 
     public void addFunction(JastraFunction function){
         functions.add(function);
     }
 
-    public List<FunctionLayout> getFunctionsLayout() throws IOException {
-        if(!layouts.isEmpty()){
-            return layouts;
+    public List<JastraFunction> getFunctionsLayout() throws IOException {
+        if(layoutCalculated){
+            return functions;
         }
+        List<JastraFunction> layouts = new ArrayList<>();
         offset=0;
         for (JastraFunction function : functions){
             byte[] code = ByteCodeGenerator.assembleFunction(function);
-            FunctionLayout layout = new FunctionLayout(
+            JastraFunction layout = new JastraFunction(
                     function.getId(),
+                    function.getName(),
                     function.getArgCount(),
                     offset,
                     code.length,
@@ -50,7 +51,9 @@ public class JastraFile {
             layouts.add(layout);
             offset+=code.length;
         }
-        return layouts;
+        functions = layouts;
+        layoutCalculated = true;
+        return functions;
     }
 
     public String getName() {

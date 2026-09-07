@@ -1,12 +1,12 @@
 package io.github.inbanithi.jastra.assembler;
 
-import io.github.inbanithi.jastra.assembler.core.Constant;
-import io.github.inbanithi.jastra.assembler.core.ConstantType;
-import io.github.inbanithi.jastra.assembler.core.Value;
 import io.github.inbanithi.jastra.assembler.file.JastraFile;
 import io.github.inbanithi.jastra.assembler.function.FunctionBuilder;
-import io.github.inbanithi.jastra.assembler.function.JastraFunction;
 import io.github.inbanithi.jastra.assembler.writer.Assembler;
+import io.github.inbanithi.jastra.specification.core.Constant;
+import io.github.inbanithi.jastra.specification.core.ConstantType;
+import io.github.inbanithi.jastra.specification.core.Value;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class JastraAssembler {
         JastraFunction function = new FunctionBuilder()
                 .name("main")
                 .argCount(0)
-                .constantNameIndex(0)
+                .id(0)
                 .store(0, Value.ofString("Inbanithi"))
                 .load(0)
                 .print()

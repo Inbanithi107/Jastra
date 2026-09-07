@@ -6,18 +6,14 @@ import io.github.inbanithi.jastra.specification.instruction.Instruction;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class LoadInstruction extends Instruction {
+public class ReturnVoidInstruction extends Instruction {
 
-    private final int register;
-
-    public LoadInstruction(int register) {
-        super(OpCode.LOAD);
-        this.register = register;
+    public ReturnVoidInstruction(){
+        super(OpCode.RETURN_VOID);
     }
 
     @Override
     public void writeTo(DataOutputStream out) throws IOException {
-        out.writeByte(opCode);
-        out.writeByte(register);
+        out.write(opCode);
     }
 }

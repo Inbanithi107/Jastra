@@ -1,6 +1,7 @@
 package io.github.inbanithi.jastra.assembler.instruction;
 
-import io.github.inbanithi.jastra.assembler.core.OpCode;
+import io.github.inbanithi.jastra.specification.core.OpCode;
+import io.github.inbanithi.jastra.specification.instruction.Instruction;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package io.github.inbanithi.jastra.assembler.core;
 
-import io.github.inbanithi.jastra.assembler.function.JastraFunction;
-import io.github.inbanithi.jastra.assembler.instruction.Instruction;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
+import io.github.inbanithi.jastra.specification.instruction.Instruction;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

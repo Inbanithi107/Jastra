@@ -1,24 +1,25 @@
 package io.github.inbanithi.jastra.assembler.function;
 
-import io.github.inbanithi.jastra.assembler.core.Value;
-import io.github.inbanithi.jastra.assembler.instruction.Instruction;
 import io.github.inbanithi.jastra.assembler.instruction.LoadInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.PrintInstruction;
-import io.github.inbanithi.jastra.assembler.instruction.ReturnInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.ReturnVoidInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.StoreInstruction;
+import io.github.inbanithi.jastra.specification.core.Value;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
+import io.github.inbanithi.jastra.specification.instruction.Instruction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionBuilder {
 
+    private int id;
+
     private String name;
 
     private int argCount;
 
     private List<Instruction> instructions;
-
-    private int constantNameIndex;
 
     public FunctionBuilder(){
         instructions = new ArrayList<>();
@@ -34,8 +35,8 @@ public class FunctionBuilder {
         return this;
     }
 
-    public FunctionBuilder constantNameIndex(int index){
-        constantNameIndex = index;
+    public FunctionBuilder id(int index){
+        id = index;
         return this;
     }
 
@@ -55,8 +56,8 @@ public class FunctionBuilder {
     }
 
     public JastraFunction returnVoid(){
-        instructions.add(new ReturnInstruction());
-        return new JastraFunction(name, argCount, instructions, constantNameIndex);
+        instructions.add(new ReturnVoidInstruction());
+        return new JastraFunction(name, argCount, instructions, id);
     }
 
 }

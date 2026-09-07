@@ -1,11 +1,11 @@
 package io.github.inbanithi.jastra.assembler.writer;
 
-import io.github.inbanithi.jastra.assembler.core.Constant;
-import io.github.inbanithi.jastra.assembler.core.ConstantType;
-import io.github.inbanithi.jastra.assembler.core.OpCode;
 import io.github.inbanithi.jastra.assembler.file.JastraFile;
 import io.github.inbanithi.jastra.assembler.function.FunctionLayout;
-import io.github.inbanithi.jastra.assembler.function.JastraFunction;
+import io.github.inbanithi.jastra.specification.core.Constant;
+import io.github.inbanithi.jastra.specification.core.ControlInstruction;
+import io.github.inbanithi.jastra.specification.core.OpCode;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
@@ -61,32 +61,31 @@ public class Assembler {
     }
 
     private void writeFunctionsTable(JastraFile file) throws IOException {
-        List<JastraFunction> functions = file.getFunctions();
-        List<FunctionLayout> layouts = file.getFunctionsLayout();
+        List<JastraFunction> functions = file.getFunctionsLayout();
         out.writeShort(functions.size());
         for(int i=0;i<functions.size();i++){
             JastraFunction function = functions.get(i);
-            FunctionLayout layout = layouts.get(i);
-            out.writeShort(i);
+            out.writeShort(function.getId());
+            out.write(function.getName().length());
+            out.write(function.getName().getBytes(StandardCharsets.UTF_8));
             out.writeShort(function.getArgCount());
-            out.writeShort(function.getConstantNameIndex());
-            out.writeInt(layout.codeOffset());
-            out.writeInt(layout.codeLength());
+            out.writeInt(function.getCodeOffset());
+            out.writeInt(function.getCodeLength());
         }
     }
 
     private void writeEntry() throws IOException {
-        out.write(0xB0);
+        out.write(ControlInstruction.ENTRY);
         out.write(OpCode.CALL);
         out.write(0);
         out.write(0);
-        out.write(0xB7);
+        out.write(ControlInstruction.HALT);
     }
 
     private void writeCode(JastraFile file) throws IOException {
-        List<FunctionLayout> layouts = file.getFunctionsLayout();
-        for(FunctionLayout layout : layouts){
-            out.write(layout.code());
+        List<JastraFunction> layouts = file.getFunctionsLayout();
+        for(JastraFunction layout : layouts){
+            out.write(layout.getCode());
         }
     }
 

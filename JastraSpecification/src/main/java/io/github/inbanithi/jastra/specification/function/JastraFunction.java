@@ -55,4 +55,16 @@ public class JastraFunction {
     public int getId() {
         return id;
     }
+
+    public int getCodeOffset() {
+        return codeOffset;
+    }
+
+    public int getCodeLength() {
+        return codeLength;
+    }
+
+    public byte[] getCode() {
+        return code;
+    }
 }
