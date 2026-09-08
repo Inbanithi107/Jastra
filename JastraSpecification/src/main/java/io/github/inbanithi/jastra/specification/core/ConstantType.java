@@ -12,6 +12,15 @@ public enum ConstantType {
         this.tag = tag;
     }
 
+    public static ConstantType from(int tag){
+        for(ConstantType type : ConstantType.values()){
+            if(type.tag==tag){
+                return type;
+            }
+        }
+        return null;
+    }
+
     public int getTag() {
         return tag;
     }

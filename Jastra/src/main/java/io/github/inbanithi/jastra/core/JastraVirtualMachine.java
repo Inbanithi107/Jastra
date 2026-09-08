@@ -1,33 +1,38 @@
 package io.github.inbanithi.jastra.core;
 
-import io.github.inbanithi.jastra.loader.Program;
+import io.github.inbanithi.jastra.loader.ApplicationModuleLoader;
+import io.github.inbanithi.jastra.loader.ModuleLoader;
+import io.github.inbanithi.jastra.specification.vm.Vm;
 
-public class JastraVirtualMachine {
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
-    private final Program program;
+public class JastraVirtualMachine extends Vm {
 
-    private int pc;
+    private final Map<String, Module> modules;
 
-    private final OperandStack operandStack;
+    private final Module mainModule;
 
-    private final CallStack callStack;
+    private final ModuleLoader loader;
 
-    public JastraVirtualMachine(Program program, OperandStack operandStack, CallStack callStack) {
-        this.program = program;
-        this.operandStack = operandStack;
-        this.callStack = callStack;
-        this.pc = 0;
+    private final Path root;
+
+    public JastraVirtualMachine(String name) {
+        root = Paths.get("").normalize().toAbsolutePath();
+        this.loader = new ApplicationModuleLoader();
+        this.mainModule = loadModule(name);
+        this.modules = new HashMap<>();
+        modules.put(name, mainModule);
     }
 
-    public JastraVirtualMachine(byte[] code){
-        this.program = loadProgram(code);
-        this.operandStack = new OperandStack();
-        this.callStack = new CallStack();
-        this.pc = 0;
+    private Module loadModule(String name){
+        return loader.load(name, root);
     }
 
-    private Program loadProgram(byte[] code){
-        return new Program(code);
-    }
+    @Override
+    public void execute(String[] strings) {
 
+    }
 }

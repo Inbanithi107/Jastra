@@ -1,9 +1,7 @@
 package io.github.inbanithi.jastra.specification.vm;
 
-public class CallStack {
+import java.util.Stack;
 
-    int pc;
-
-    Frame frame;
+public class CallStack extends Stack<Frame> {
 
 }

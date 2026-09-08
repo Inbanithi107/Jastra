@@ -16,6 +16,8 @@ public class JastraAssembler {
 
         JastraFile file = new JastraFile("hello");
         file.addConstant(new Constant(0, ConstantType.STRING, "main"));
+        file.addConstant(new Constant(1, ConstantType.FLOAT, 10.5f));
+        file.addConstant(new Constant(2, ConstantType.INTEGER, 25));
         JastraFunction function = new FunctionBuilder()
                 .name("main")
                 .argCount(0)

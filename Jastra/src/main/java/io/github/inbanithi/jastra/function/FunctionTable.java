@@ -1,27 +1,23 @@
 package io.github.inbanithi.jastra.function;
 
-import io.github.inbanithi.jastra.loader.Function;
 
 import java.util.HashMap;
 import java.util.Map;
+import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 public class FunctionTable {
 
-    private Map<Long, Function> table = new HashMap<>();
+    private Map<Integer, JastraFunction> table = new HashMap<>();
 
-    public FunctionTable(byte[] functionInstructions){
-        processInstruction(functionInstructions);
-    }
-
-    private void processInstruction(byte[] instructions){
-
-    }
-
-    public Function getFunction(long id){
+    public JastraFunction getFunction(long id){
         if(table.containsKey(id)){
             return table.get(id);
         }
         throw new RuntimeException("Function not found");
+    }
+
+    public void addFunction(int id, JastraFunction function){
+        table.put(id, function);
     }
 
 }
