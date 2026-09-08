@@ -1,5 +1,6 @@
 package io.github.inbanithi.jastra.specification.vm;
 
+import io.github.inbanithi.jastra.specification.core.Module;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
@@ -10,7 +11,7 @@ public class Frame {
 
     public int pc;
 
-    public Module module;
+    public io.github.inbanithi.jastra.specification.core.Module module;
 
     public JastraFunction function;
 
@@ -20,6 +21,21 @@ public class Frame {
         this.pc = offset;
         this.module = module;
         this.function = function;
+    }
+
+    public byte fetchByte(){
+        return module.getCode()[pc++];
+    }
+
+    public int getPc(){
+        return this.pc;
+    }
+
+    public int fetchInt() {
+        return (fetchByte() & 0xFF) << 24 |
+                (fetchByte() & 0xFF) << 16 |
+                (fetchByte() & 0xFF) << 8  |
+                (fetchByte() & 0xFF);
     }
 
 }

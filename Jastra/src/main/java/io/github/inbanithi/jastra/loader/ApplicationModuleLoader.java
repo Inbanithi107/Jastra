@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import io.github.inbanithi.jastra.core.Module;
-import io.github.inbanithi.jastra.function.ConstantPoolTable;
-import io.github.inbanithi.jastra.function.FunctionTable;
 import io.github.inbanithi.jastra.specification.core.Constant;
 import io.github.inbanithi.jastra.specification.core.ConstantType;
+import io.github.inbanithi.jastra.specification.core.Module;
+import io.github.inbanithi.jastra.specification.function.ConstantPoolTable;
+import io.github.inbanithi.jastra.specification.function.FunctionTable;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 public class ApplicationModuleLoader implements ModuleLoader {
@@ -24,21 +24,32 @@ public class ApplicationModuleLoader implements ModuleLoader {
 
     private DataInputStream in;
 
+    private ByteArrayInputStream bais;
+
     @Override
-    public Module load(String name, Path path) {
+    public io.github.inbanithi.jastra.specification.core.Module load(String name, Path path) {
         Path file = path.resolve(name+extension).normalize();
-        System.out.println(file);
+        //System.out.println(file);
         byte[] code;
         try {
             code = Files.readAllBytes(file);
         }catch (IOException e) {
             throw new RuntimeException("File cant be read");
         }
-        in = new DataInputStream(new ByteArrayInputStream(code));
+        bais = new ByteArrayInputStream(code);
+        in = new DataInputStream(bais);
         verifyHeader();
         ConstantPoolTable constants = buildConstantPool();
         FunctionTable functions = buildFunctionTable();
-        return new Module(name, code, functions, constants);
+        int entry = code.length - bais.available()+1;
+        int codeSectionOffset = entry+4;
+        //System.out.println(entry+"-"+code[entry]+"-----"+codeSectionOffset+"-"+code[codeSectionOffset]);
+        try {
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new Module(name, code, functions, constants, entry, codeSectionOffset);
     }
 
     private void verifyHeader(){
@@ -82,7 +93,7 @@ public class ApplicationModuleLoader implements ModuleLoader {
                     }
                 };
                 Constant constant = new Constant(id, type, value);
-                System.out.println(id+"----"+type.name()+"----"+value);
+                //System.out.println(id+"----"+type.name()+"----"+value);
                 table.addConstant(id, constant);
             }
             return table;
@@ -105,7 +116,7 @@ public class ApplicationModuleLoader implements ModuleLoader {
                 int codeOffset = in.readInt();
                 int codeLength = in.readInt();
                 JastraFunction function = new JastraFunction(id, name, argCount, codeOffset, codeLength, null);
-                System.out.println(id+"----"+name+"----"+argCount+"----"+codeOffset+"----"+codeLength);
+                //System.out.println(id+"----"+name+"----"+argCount+"----"+codeOffset+"----"+codeLength);
                 table.addFunction(id, function);
             }
             return table;

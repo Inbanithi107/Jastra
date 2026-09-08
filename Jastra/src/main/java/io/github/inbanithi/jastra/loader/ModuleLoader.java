@@ -1,6 +1,7 @@
 package io.github.inbanithi.jastra.loader;
 
-import io.github.inbanithi.jastra.core.Module;
+
+import io.github.inbanithi.jastra.specification.core.Module;
 
 import java.nio.file.Path;
 

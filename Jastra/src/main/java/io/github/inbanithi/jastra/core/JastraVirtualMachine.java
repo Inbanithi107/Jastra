@@ -2,7 +2,11 @@ package io.github.inbanithi.jastra.core;
 
 import io.github.inbanithi.jastra.loader.ApplicationModuleLoader;
 import io.github.inbanithi.jastra.loader.ModuleLoader;
+import io.github.inbanithi.jastra.runtime.JastraRuntime;
+import io.github.inbanithi.jastra.runtime.Runtime;
+import io.github.inbanithi.jastra.specification.vm.Frame;
 import io.github.inbanithi.jastra.specification.vm.Vm;
+import io.github.inbanithi.jastra.specification.core.Module;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,6 +37,9 @@ public class JastraVirtualMachine extends Vm {
 
     @Override
     public void execute(String[] strings) {
-
+        Runtime runtime = new JastraRuntime();
+        Frame frame = new Frame(mainModule, null, mainModule.entry);
+        this.callStack.push(frame);
+        runtime.execute(this);
     }
 }

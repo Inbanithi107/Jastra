@@ -1,15 +1,14 @@
-package io.github.inbanithi.jastra.function;
+package io.github.inbanithi.jastra.specification.function;
 
 
 import java.util.HashMap;
 import java.util.Map;
-import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 public class FunctionTable {
 
     private Map<Integer, JastraFunction> table = new HashMap<>();
 
-    public JastraFunction getFunction(long id){
+    public JastraFunction getFunction(int id){
         if(table.containsKey(id)){
             return table.get(id);
         }

@@ -5,9 +5,9 @@ import java.io.IOException;
 
 public abstract class Instruction {
 
-    protected byte opCode;
+    protected int opCode;
 
-    public Instruction(byte opCode){
+    public Instruction(int opCode){
         this.opCode = opCode;
     }
 

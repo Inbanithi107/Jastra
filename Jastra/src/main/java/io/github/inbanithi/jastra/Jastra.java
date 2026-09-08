@@ -6,6 +6,7 @@ public class Jastra {
 
     public static void main(String[] args){
         JastraVirtualMachine jvm = new JastraVirtualMachine("hello");
+        jvm.execute(null);
     }
 
 }

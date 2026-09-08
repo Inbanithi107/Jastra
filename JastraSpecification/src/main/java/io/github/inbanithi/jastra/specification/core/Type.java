@@ -20,4 +20,13 @@ public enum Type {
     public int getCode() {
         return code;
     }
+
+    public static Type from(int code){
+        for(Type type : Type.values()){
+            if(type.getCode()==code){
+                return type;
+            }
+        }
+        return null;
+    }
 }

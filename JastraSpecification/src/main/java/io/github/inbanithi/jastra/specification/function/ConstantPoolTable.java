@@ -1,4 +1,4 @@
-package io.github.inbanithi.jastra.function;
+package io.github.inbanithi.jastra.specification.function;
 
 import io.github.inbanithi.jastra.specification.core.Constant;
 
