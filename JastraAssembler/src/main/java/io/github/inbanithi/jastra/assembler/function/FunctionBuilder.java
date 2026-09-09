@@ -1,6 +1,8 @@
 package io.github.inbanithi.jastra.assembler.function;
 
+import io.github.inbanithi.jastra.assembler.instruction.AddInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.LoadInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.PopStoreRegisterInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.PrintInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.ReturnVoidInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.StoreInstruction;
@@ -45,8 +47,18 @@ public class FunctionBuilder {
         return this;
     }
 
+    public FunctionBuilder popAndStore(int register){
+        instructions.add(new PopStoreRegisterInstruction(register));
+        return this;
+    }
+
     public FunctionBuilder load(int register){
         instructions.add(new LoadInstruction(register));
+        return this;
+    }
+
+    public FunctionBuilder add(){
+        instructions.add(new AddInstruction());
         return this;
     }
 

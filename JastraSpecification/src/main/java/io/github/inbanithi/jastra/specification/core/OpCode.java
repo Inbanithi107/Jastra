@@ -4,6 +4,8 @@ public final class OpCode {
 
     public static int STORE = 0x01;
 
+    public static int POP_STORE_REG = 0x02;
+
     public static int LOAD = 0x10;
 
     public static int ADD = 0x20;

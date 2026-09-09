@@ -23,6 +23,7 @@ public class StoreHandler extends Handler {
                 }
                 yield Value.ofString(new String(arr, StandardCharsets.UTF_8));
             }
+            case INT -> Value.ofInt(frame.fetchInt());
             default -> null;
         };
         frame.registers[destination] = value;
