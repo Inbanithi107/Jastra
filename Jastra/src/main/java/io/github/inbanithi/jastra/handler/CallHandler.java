@@ -14,8 +14,9 @@ public class CallHandler extends Handler {
         int argCount = frame.fetchByte();
         JastraFunction function = frame.module.functionTable.getFunction(id);
         Frame callFrame = new Frame(frame.module, function, frame.module.codeSectionOffset+ function.getCodeOffset());
-        for(int i=0;i<argCount;i++){
-            frame.registers[i] = frame.operandStack.pop();
+        for(int i=argCount-1;i>=0;i--){
+            //System.out.println(i+"-"+frame.operandStack.peek().toStringValue());
+            callFrame.registers[i] = frame.operandStack.pop();
         }
         vm.callStack.push(callFrame);
 

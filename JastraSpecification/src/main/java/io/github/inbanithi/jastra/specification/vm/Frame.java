@@ -38,4 +38,12 @@ public class Frame {
                 (fetchByte() & 0xFF);
     }
 
+    public float fetchFloat(){
+        int bits = (fetchByte() & 0xFF) << 24 |
+                (fetchByte() & 0xFF) << 16 |
+                (fetchByte() & 0xFF) << 8  |
+                (fetchByte() & 0xFF);
+        return Float.intBitsToFloat(bits);
+    }
+
 }

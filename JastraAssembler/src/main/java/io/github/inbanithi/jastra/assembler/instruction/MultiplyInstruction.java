@@ -6,17 +6,13 @@ import io.github.inbanithi.jastra.specification.instruction.Instruction;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ReturnInstruction extends Instruction {
-
-    private final int count;
-    public ReturnInstruction(int count) {
-        super(OpCode.RETURN);
-        this.count = count;
+public class MultiplyInstruction extends Instruction {
+    public MultiplyInstruction() {
+        super(OpCode.MUL);
     }
 
     @Override
     public void writeTo(DataOutputStream out) throws IOException {
         out.write(opCode);
-        out.write(count);
     }
 }

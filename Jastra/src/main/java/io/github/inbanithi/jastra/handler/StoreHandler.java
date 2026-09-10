@@ -24,6 +24,7 @@ public class StoreHandler extends Handler {
                 yield Value.ofString(new String(arr, StandardCharsets.UTF_8));
             }
             case INT -> Value.ofInt(frame.fetchInt());
+            case FLOAT -> Value.ofFloat(frame.fetchFloat());
             default -> null;
         };
         frame.registers[destination] = value;

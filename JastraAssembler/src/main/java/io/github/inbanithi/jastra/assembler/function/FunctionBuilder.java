@@ -1,11 +1,17 @@
 package io.github.inbanithi.jastra.assembler.function;
 
 import io.github.inbanithi.jastra.assembler.instruction.AddInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.CallInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.DivisionInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.LoadFromConstInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.LoadInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.MultiplyInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.PopStoreRegisterInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.PrintInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.ReturnInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.ReturnVoidInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.StoreInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.SubtractInstruction;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 import io.github.inbanithi.jastra.specification.instruction.Instruction;
@@ -57,8 +63,33 @@ public class FunctionBuilder {
         return this;
     }
 
+    public FunctionBuilder loadFromConst(int id){
+        instructions.add(new LoadFromConstInstruction(id));
+        return this;
+    }
+
     public FunctionBuilder add(){
         instructions.add(new AddInstruction());
+        return this;
+    }
+
+    public FunctionBuilder subtract(){
+        instructions.add(new SubtractInstruction());
+        return this;
+    }
+
+    public FunctionBuilder multiply(){
+        instructions.add(new MultiplyInstruction());
+        return this;
+    }
+
+    public FunctionBuilder divide(){
+        instructions.add(new DivisionInstruction());
+        return this;
+    }
+
+    public FunctionBuilder call(int id, int argCount){
+        instructions.add(new CallInstruction(id, argCount));
         return this;
     }
 
@@ -69,6 +100,11 @@ public class FunctionBuilder {
 
     public JastraFunction returnVoid(){
         instructions.add(new ReturnVoidInstruction());
+        return new JastraFunction(name, argCount, instructions, id);
+    }
+
+    public JastraFunction returnValues(int count){
+        instructions.add(new ReturnInstruction(count));
         return new JastraFunction(name, argCount, instructions, id);
     }
 
