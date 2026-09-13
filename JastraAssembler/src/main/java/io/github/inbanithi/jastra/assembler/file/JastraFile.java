@@ -1,11 +1,9 @@
 package io.github.inbanithi.jastra.assembler.file;
 
 import io.github.inbanithi.jastra.assembler.core.ByteCodeGenerator;
-import io.github.inbanithi.jastra.assembler.function.FunctionLayout;
 import io.github.inbanithi.jastra.specification.core.Constant;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class JastraFile {
 
     private boolean layoutCalculated = false;
 
-    public JastraFile(String name) throws FileNotFoundException {
+    public JastraFile(String name) {
         this.name = name;
         this.functions = new ArrayList<>();
         this.constants = new ArrayList<>();

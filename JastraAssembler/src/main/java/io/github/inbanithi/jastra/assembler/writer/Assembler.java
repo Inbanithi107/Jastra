@@ -1,7 +1,6 @@
 package io.github.inbanithi.jastra.assembler.writer;
 
 import io.github.inbanithi.jastra.assembler.file.JastraFile;
-import io.github.inbanithi.jastra.assembler.function.FunctionLayout;
 import io.github.inbanithi.jastra.specification.core.Constant;
 import io.github.inbanithi.jastra.specification.core.ControlInstruction;
 import io.github.inbanithi.jastra.specification.core.OpCode;

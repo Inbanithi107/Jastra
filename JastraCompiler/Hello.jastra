@@ -1,0 +1,11 @@
+FUN main 0:
+    STORE R0 "Add: "
+    STORE R1 20
+    STORE R2 40.5f
+    LOAD R0
+    LOAD R1
+    LOAD R2
+    MUL
+    ADD
+    PRINT
+    RETURN_VOID
