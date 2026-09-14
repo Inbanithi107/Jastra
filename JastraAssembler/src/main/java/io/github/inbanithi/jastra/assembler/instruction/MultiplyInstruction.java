@@ -12,6 +12,11 @@ public class MultiplyInstruction extends Instruction {
     }
 
     @Override
+    public int getSize() {
+        return 1;
+    }
+
+    @Override
     public void writeTo(DataOutputStream out) throws IOException {
         out.write(opCode);
     }

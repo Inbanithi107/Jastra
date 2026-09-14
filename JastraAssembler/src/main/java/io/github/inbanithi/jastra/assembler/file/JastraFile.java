@@ -1,12 +1,17 @@
 package io.github.inbanithi.jastra.assembler.file;
 
 import io.github.inbanithi.jastra.assembler.core.ByteCodeGenerator;
+import io.github.inbanithi.jastra.assembler.core.Resolvable;
+import io.github.inbanithi.jastra.assembler.instruction.jump.LabelInstruction;
 import io.github.inbanithi.jastra.specification.core.Constant;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
+import io.github.inbanithi.jastra.specification.instruction.Instruction;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JastraFile {
 
@@ -37,6 +42,7 @@ public class JastraFile {
         List<JastraFunction> layouts = new ArrayList<>();
         offset=0;
         for (JastraFunction function : functions){
+            calculateOffset(function);
             byte[] code = ByteCodeGenerator.assembleFunction(function);
             JastraFunction layout = new JastraFunction(
                     function.getId(),
@@ -68,5 +74,24 @@ public class JastraFile {
 
     public void addConstant(Constant constant){
         constants.add(constant);
+    }
+
+    private void calculateOffset(JastraFunction function){
+        Map<String, Integer> labels = new HashMap<>();
+        int offset=0;
+        for(Instruction instruction : function.getInstructions()){
+            if(instruction instanceof LabelInstruction labelInstruction){
+                labels.put(labelInstruction.getLabel(), offset);
+                continue;
+            }
+            instruction.setOffset(offset);
+            offset+= instruction.getSize();
+        }
+        for(Instruction instruction : function.getInstructions()){
+            if(instruction instanceof Resolvable resolvable){
+                resolvable.resolve(labels);
+            }
+        }
+
     }
 }

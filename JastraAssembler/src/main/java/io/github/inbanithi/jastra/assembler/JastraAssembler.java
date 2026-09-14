@@ -9,6 +9,9 @@ import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class JastraAssembler {
 
@@ -22,7 +25,12 @@ public class JastraAssembler {
                 .name("main")
                 .argCount(0)
                 .id(0)
-                .store(0, Value.ofString("Inbanithi"))
+                .store(0, Value.ofInt(0))
+                .load(0)
+                .ifThen(
+                        (c)-> c.loadFromConst(0).print().returnVoid(),
+                        "JNZ"
+                )
                 .load(0)
                 .print()
                 .returnVoid();
@@ -30,7 +38,8 @@ public class JastraAssembler {
         Assembler assembler = new Assembler();
         assembler.assemble(file);
         System.out.println("Program Finished");
-
+        byte[] arr = Files.readAllBytes(Path.of("hello.bin"));
+        System.out.println(Arrays.toString(arr));
     }
 
 }

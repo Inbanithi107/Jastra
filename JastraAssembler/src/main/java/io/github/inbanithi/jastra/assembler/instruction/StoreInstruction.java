@@ -22,6 +22,39 @@ public class StoreInstruction extends Instruction {
     }
 
     @Override
+    public int getSize() {
+        int size = 1;
+        size += 1;
+        size += 1;
+
+        switch (value.type()) {
+            case NULL -> {
+            }
+
+            case INT -> size += 4;
+
+            case LONG -> size += 8;
+
+            case FLOAT -> size += 4;
+
+            case DOUBLE -> size += 8;
+
+            case BOOLEAN -> size += 1;
+
+            case CHARACTER -> size += 2;
+
+            case STRING -> {
+                byte[] bytes =
+                        ((String) value.raw()).getBytes(StandardCharsets.UTF_8);
+                size += 4;
+                size += bytes.length;
+            }
+        }
+
+        return size;
+    }
+
+    @Override
     public void writeTo(DataOutputStream out) throws IOException {
         out.writeByte(opCode);
         out.writeByte(destination);

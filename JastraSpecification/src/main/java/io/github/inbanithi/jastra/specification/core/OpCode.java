@@ -20,10 +20,30 @@ public final class OpCode {
 
     public static int PRINT =  0xA0;
 
+    public static int JMP = 0x50;
+
+    public static int JIZ = 0x51;
+
+    public static int JNZ = 0x52;
+
     public static int CALL = 0x60;
 
     public static int RETURN_VOID = 0x61;
 
     public static int RETURN = 0x62;
+
+    public static class Compare {
+        public static int CMP_EQ = 0x30;
+
+        public static int CMP_NE = 0x31;
+
+        public static int CMP_LT = 0x32;
+
+        public static int CMP_LE = 0x33;
+
+        public static int CMP_GT = 0x34;
+
+        public static int CMP_GE = 0x35;
+    }
 
 }

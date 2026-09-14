@@ -16,6 +16,11 @@ public class PopStoreRegisterInstruction extends Instruction {
     }
 
     @Override
+    public int getSize() {
+        return 2;
+    }
+
+    @Override
     public void writeTo(DataOutputStream out) throws IOException {
         out.write(opCode);
         out.write(register);

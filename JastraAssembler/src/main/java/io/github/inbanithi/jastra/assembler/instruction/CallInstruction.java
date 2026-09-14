@@ -19,6 +19,11 @@ public class CallInstruction extends Instruction {
     }
 
     @Override
+    public int getSize() {
+        return 3;
+    }
+
+    @Override
     public void writeTo(DataOutputStream out) throws IOException {
         out.write(opCode);
         out.write(id);
