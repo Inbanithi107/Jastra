@@ -62,8 +62,70 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitCompareStatement(JastraParser.CompareStatementContext ctx) {
+        if(ctx.CMP_EQ()!=null){
+            func.cmpEq();
+        }
+        else if(ctx.CMP_NE()!=null){
+            func.cmpNeq();
+        }
+        else if(ctx.CMP_LT()!=null){
+            func.cmpLt();
+        }
+        else if(ctx.CMP_LE()!=null){
+            func.cmpLeq();
+        }
+        else if(ctx.CMP_GT()!=null){
+            func.cmpGt();
+        }
+        else if(ctx.CMP_GE()!=null){
+            func.cmpGeq();
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitConditionalStatement(JastraParser.ConditionalStatementContext ctx) {
+        String condition = ctx.IF().getText();
+        if(ctx.ELSE()!=null){
+            func.ifElse(
+                    (c)-> {
+                        for(JastraParser.StatementContext statement : ctx.ifStatements){
+                            visit(statement);
+                        }
+                        return null;
+                    },
+                    (v)-> {
+                        for(JastraParser.StatementContext statement : ctx.elseStatements){
+                            visit(statement);
+                        }
+                        return null;
+                    },
+                    condition
+            );
+        }
+        return null;
+    }
+
+    @Override
     public Object visitPrintStatement(JastraParser.PrintStatementContext ctx) {
         func.print();
+        return null;
+    }
+
+    @Override
+    public Object visitCallStatement(JastraParser.CallStatementContext ctx) {
+        int id = Integer.parseInt(ctx.INTEGER(0).getText());
+        int argCount = Integer.parseInt(ctx.INTEGER(1).getText());
+        func.call(id, argCount);
+        return null;
+    }
+
+    @Override
+    public Object visitReturnStatement(JastraParser.ReturnStatementContext ctx) {
+        int count = Integer.parseInt(ctx.INTEGER().getText());
+        JastraFunction function = func.returnValues(count);
+        file.addFunction(function);
         return null;
     }
 

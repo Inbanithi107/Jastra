@@ -1,11 +1,24 @@
-FUN main 0:
-    STORE R0 "Add: "
-    STORE R1 20
-    STORE R2 40.5f
+FUN main 0 :
+    STORE R0 10.0f
+    STORE R1 20.0f
+    STORE R2 "add"
     LOAD R0
     LOAD R1
     LOAD R2
-    MUL
-    ADD
+    CALL 1 3
     PRINT
     RETURN_VOID
+
+FUN help 3 :
+    STORE R3 "add"
+    LOAD R0
+    LOAD R1
+    LOAD R3
+    LOAD R2
+    CMP_EQ
+    JIZ:
+        ADD
+    ELSE:
+        DIV
+    END
+    RETURN 1

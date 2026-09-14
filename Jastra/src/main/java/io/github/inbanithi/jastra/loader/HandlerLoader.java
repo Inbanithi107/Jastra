@@ -6,8 +6,15 @@ import io.github.inbanithi.jastra.handler.DivisionHandler;
 import io.github.inbanithi.jastra.handler.EntryHandler;
 import io.github.inbanithi.jastra.handler.HaltHandler;
 import io.github.inbanithi.jastra.handler.Handler;
-import io.github.inbanithi.jastra.handler.JumpHandler;
-import io.github.inbanithi.jastra.handler.JumpIfZeroHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareEqualHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareGreaterThenHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareGreaterThenOrEqualHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareLessThenHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareLessThenOrEqualHandler;
+import io.github.inbanithi.jastra.handler.compare.CompareNotEqualHandler;
+import io.github.inbanithi.jastra.handler.jump.JumpHandler;
+import io.github.inbanithi.jastra.handler.jump.JumpIfNotZeroHandler;
+import io.github.inbanithi.jastra.handler.jump.JumpIfZeroHandler;
 import io.github.inbanithi.jastra.handler.LoadFromConstHandler;
 import io.github.inbanithi.jastra.handler.LoadHandler;
 import io.github.inbanithi.jastra.handler.MultiplyHandler;
@@ -38,9 +45,20 @@ public class HandlerLoader {
         handlers[OpCode.PRINT] = new PrintHandler();
         handlers[OpCode.JMP] = new JumpHandler();
         handlers[OpCode.JIZ] = new JumpIfZeroHandler();
+        handlers[OpCode.JNZ] = new JumpIfNotZeroHandler();
         handlers[OpCode.RETURN_VOID] = new ReturnVoidHandler();
         handlers[OpCode.RETURN] = new ReturnHandler();
+        getCompareHandler(handlers);
         return handlers;
+    }
+
+    private static void getCompareHandler(Handler[] handlers){
+        handlers[OpCode.Compare.CMP_EQ] = new CompareEqualHandler();
+        handlers[OpCode.Compare.CMP_NE] = new CompareNotEqualHandler();
+        handlers[OpCode.Compare.CMP_LT] = new CompareLessThenHandler();
+        handlers[OpCode.Compare.CMP_LE] = new CompareLessThenOrEqualHandler();
+        handlers[OpCode.Compare.CMP_GT] = new CompareGreaterThenHandler();
+        handlers[OpCode.Compare.CMP_GE] = new CompareGreaterThenOrEqualHandler();
     }
 
 }

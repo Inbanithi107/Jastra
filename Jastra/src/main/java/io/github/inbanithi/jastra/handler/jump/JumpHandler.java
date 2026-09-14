@@ -1,6 +1,7 @@
-package io.github.inbanithi.jastra.handler;
+package io.github.inbanithi.jastra.handler.jump;
 
 import io.github.inbanithi.jastra.core.JastraVirtualMachine;
+import io.github.inbanithi.jastra.handler.Handler;
 import io.github.inbanithi.jastra.specification.vm.Frame;
 
 public class JumpHandler extends Handler {
