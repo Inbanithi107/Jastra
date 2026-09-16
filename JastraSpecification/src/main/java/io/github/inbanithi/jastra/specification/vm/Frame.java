@@ -46,4 +46,36 @@ public class Frame {
         return Float.intBitsToFloat(bits);
     }
 
+    public long fetchLong(){
+        return (long) (fetchByte() & 0xFF) << 56 |
+                (long) (fetchByte() & 0xFF) << 48 |
+                (long) (fetchByte() & 0xFF) << 40 |
+                (long) (fetchByte() & 0xFF) << 32 |
+                (long) (fetchByte() & 0xFF) << 24 |
+                (fetchByte() & 0xFF) << 16 |
+                (fetchByte() & 0xFF) << 8 |
+                (fetchByte() & 0xFF);
+    }
+
+    public double fetchDouble(){
+        long bits = (long) (fetchByte() & 0xFF) << 56 |
+                (long) (fetchByte() & 0xFF) << 48 |
+                (long) (fetchByte() & 0xFF) << 40 |
+                (long) (fetchByte() & 0xFF) << 32 |
+                (long) (fetchByte() & 0xFF) << 24 |
+                (fetchByte() & 0xFF) << 16 |
+                (fetchByte() & 0xFF) << 8 |
+                (fetchByte() & 0xFF);
+        return Double.longBitsToDouble(bits);
+    }
+
+    public char fetchChar(){
+        return (char) ((fetchByte() & 0xFF) << 8
+                        | (fetchByte() & 0xFF));
+    }
+
+    public boolean fetchBoolean(){
+        return fetchByte()!=0;
+    }
+
 }

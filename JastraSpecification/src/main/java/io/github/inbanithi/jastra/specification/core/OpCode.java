@@ -46,4 +46,10 @@ public final class OpCode {
         public static int CMP_GE = 0x35;
     }
 
+    public static class OperandStack {
+        public static int PUSH = 0x12;
+
+        public static int POP = 0x13;
+    }
+
 }

@@ -58,6 +58,13 @@ public final class Value {
         };
     }
 
+    public char asChar() {
+        return switch (type) {
+            case INT, CHARACTER -> (char) value;
+            default -> throw typeError("char");
+        };
+    }
+
     public long asLong(){
         return switch (type){
             case INT -> (Integer) value;

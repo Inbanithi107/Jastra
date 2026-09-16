@@ -15,6 +15,8 @@ statement :
         | popAndStoreinRegisterStatement
         | loadStatement
         | loadFromConstantStatement
+        | pushStatement
+        | popStatement
         | printStatement
         | arithmeticStatement
         | compareStatement
@@ -27,6 +29,8 @@ storeStatement: STORE REGISTER value;
 popAndStoreinRegisterStatement: PSR REGISTER;
 loadStatement: LOAD REGISTER;
 loadFromConstantStatement: LFC ID;
+pushStatement: PUSH value;
+popStatement: POP;
 arithmeticStatement: ADD | SUBTRACT | MULTIPLY | DIVIDE;
 compareStatement: CMP_EQ | CMP_NE | CMP_LT | CMP_LE | CMP_GT | CMP_GE;
 conditionalStatement :
@@ -61,6 +65,8 @@ STORE: 'STORE';
 PSR: 'PSR';
 LOAD: 'LOAD';
 LFC: 'LFC';
+PUSH: 'PUSH';
+POP: 'POP';
 CALL: 'CALL';
 PRINT: 'PRINT';
 RETURN: 'RETURN';

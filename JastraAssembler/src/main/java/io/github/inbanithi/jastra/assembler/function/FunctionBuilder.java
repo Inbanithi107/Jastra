@@ -23,6 +23,8 @@ import io.github.inbanithi.jastra.assembler.instruction.ReturnInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.ReturnVoidInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.StoreInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.SubtractInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.operandstack.PopInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.operandstack.PushInstruction;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 import io.github.inbanithi.jastra.specification.instruction.Instruction;
@@ -78,6 +80,16 @@ public class FunctionBuilder {
 
     public FunctionBuilder loadFromConst(int id){
         instructions.add(new LoadFromConstInstruction(id));
+        return this;
+    }
+
+    public FunctionBuilder push(Value value){
+        instructions.add(new PushInstruction(value));
+        return this;
+    }
+
+    public FunctionBuilder pop(){
+        instructions.add(new PopInstruction());
         return this;
     }
 

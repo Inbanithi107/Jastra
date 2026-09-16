@@ -24,6 +24,8 @@ import io.github.inbanithi.jastra.handler.ReturnHandler;
 import io.github.inbanithi.jastra.handler.ReturnVoidHandler;
 import io.github.inbanithi.jastra.handler.StoreHandler;
 import io.github.inbanithi.jastra.handler.SubtractHandler;
+import io.github.inbanithi.jastra.handler.operandstack.PopHandler;
+import io.github.inbanithi.jastra.handler.operandstack.PushHandler;
 import io.github.inbanithi.jastra.specification.core.ControlInstruction;
 import io.github.inbanithi.jastra.specification.core.OpCode;
 
@@ -49,6 +51,7 @@ public class HandlerLoader {
         handlers[OpCode.RETURN_VOID] = new ReturnVoidHandler();
         handlers[OpCode.RETURN] = new ReturnHandler();
         getCompareHandler(handlers);
+        getOperandStackHandler(handlers);
         return handlers;
     }
 
@@ -59,6 +62,11 @@ public class HandlerLoader {
         handlers[OpCode.Compare.CMP_LE] = new CompareLessThenOrEqualHandler();
         handlers[OpCode.Compare.CMP_GT] = new CompareGreaterThenHandler();
         handlers[OpCode.Compare.CMP_GE] = new CompareGreaterThenOrEqualHandler();
+    }
+
+    public static void getOperandStackHandler(Handler[] handlers){
+        handlers[OpCode.OperandStack.PUSH] = new PushHandler();
+        handlers[OpCode.OperandStack.POP] = new PopHandler();
     }
 
 }

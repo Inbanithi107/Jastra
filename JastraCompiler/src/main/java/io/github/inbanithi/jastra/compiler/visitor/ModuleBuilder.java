@@ -89,6 +89,19 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitPushStatement(JastraParser.PushStatementContext ctx) {
+        Value value = (Value) visit(ctx.value());
+        func.push(value);
+        return null;
+    }
+
+    @Override
+    public Object visitPopStatement(JastraParser.PopStatementContext ctx) {
+        func.pop();
+        return null;
+    }
+
+    @Override
     public Object visitArithmeticStatement(JastraParser.ArithmeticStatementContext ctx) {
         if(ctx.ADD()!=null){
             func.add();
@@ -199,7 +212,7 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     @Override
     public Object visitCharLiteral(JastraParser.CharLiteralContext ctx) {
-        return Value.ofChar(ctx.CHARACTER().getText().charAt(0));
+        return Value.ofChar(ctx.CHARACTER().getText().charAt(1));
     }
 
     @Override

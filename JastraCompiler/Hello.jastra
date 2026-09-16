@@ -8,21 +8,23 @@ FUN main 0 :
     STORE R0 18
     LOAD R0
     CALL checkAge 1
-    CALL aboutMe 0
+    PUSH 'C'
+    PUSH 'D'
+    ADD
+    PRINT
     RETURN_VOID
 
 FUN checkAge 1 :
     LOAD R0
-    STORE R1 18
-    LOAD R1
+    PUSH 18
     CMP_GE
     JIZ:
-        STORE R2 "You are eligible to vote"
+        PUSH "You are eligible to vote"
     ELSE:
-        STORE R2 "you are not eligible to vote"
+        PUSH "you are not eligible to vote"
     END
-    LOAD R2
     PRINT
+    CALL aboutMe 0
     RETURN_VOID
 
 FUN aboutMe 0 :
