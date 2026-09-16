@@ -7,16 +7,19 @@ import io.github.inbanithi.jastra.assembler.function.FunctionBuilder;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
+import java.util.Map;
+
 public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     private JastraFile file;
 
     private FunctionBuilder func;
 
-    private int functionIndexer = 0;
+    private Map<String,Integer> functions;
 
-    public ModuleBuilder(String name) {
+    public ModuleBuilder(String name, Map<String,Integer> map) {
         file = new JastraFile(name);
+        functions = map;
     }
 
     public JastraFile getFile(){
@@ -27,7 +30,7 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
     public Object visitFunctionDeclration(JastraParser.FunctionDeclrationContext ctx) {
         String name = ctx.ID().getText();
         int argCount = Integer.parseInt(ctx.INTEGER().getText());
-        func = new FunctionBuilder().id(functionIndexer++).name(name).argCount(argCount);
+        func = new FunctionBuilder().id(functions.get(name)).name(name).argCount(argCount);
         visitChildren(ctx);
         return null;
     }
@@ -115,9 +118,9 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     @Override
     public Object visitCallStatement(JastraParser.CallStatementContext ctx) {
-        int id = Integer.parseInt(ctx.INTEGER(0).getText());
-        int argCount = Integer.parseInt(ctx.INTEGER(1).getText());
-        func.call(id, argCount);
+        String name = ctx.ID().getText();
+        int argCount = Integer.parseInt(ctx.INTEGER().getText());
+        func.call(functions.get(name), argCount);
         return null;
     }
 

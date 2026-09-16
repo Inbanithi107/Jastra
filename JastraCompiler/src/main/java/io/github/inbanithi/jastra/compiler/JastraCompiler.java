@@ -4,6 +4,7 @@ import io.github.inabnithi.jastra.compiler.JastraLexer;
 import io.github.inabnithi.jastra.compiler.JastraParser;
 import io.github.inbanithi.jastra.assembler.file.JastraFile;
 import io.github.inbanithi.jastra.assembler.writer.Assembler;
+import io.github.inbanithi.jastra.compiler.visitor.MetaBuilder;
 import io.github.inbanithi.jastra.compiler.visitor.ModuleBuilder;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -24,7 +25,9 @@ public class JastraCompiler {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             JastraParser parser = new JastraParser(tokens);
             ParseTree tree = parser.program();
-            ModuleBuilder builder = new ModuleBuilder("Hello");
+            MetaBuilder meta = new MetaBuilder();
+            meta.visit(tree);
+            ModuleBuilder builder = new ModuleBuilder("Hello",meta.functions);
             builder.visit(tree);
             JastraFile file = builder.getFile();
             Assembler assembler = new Assembler();

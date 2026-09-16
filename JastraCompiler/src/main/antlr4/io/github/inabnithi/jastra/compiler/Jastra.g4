@@ -25,7 +25,7 @@ conditionalStatement :
                     IF COLON ifStatements+=statement* END
                     | IF COLON ifStatements+=statement* ELSE COLON elseStatements+=statement* END;
 printStatement: PRINT;
-callStatement: CALL INTEGER INTEGER;
+callStatement: CALL ID INTEGER;
 returnStatement: RETURN INTEGER;
 returnVoidStatement: RETURN_VOID;
 
