@@ -27,7 +27,7 @@ public class JastraCompiler {
             ParseTree tree = parser.program();
             MetaBuilder meta = new MetaBuilder();
             meta.visit(tree);
-            ModuleBuilder builder = new ModuleBuilder("Hello",meta.functions);
+            ModuleBuilder builder = new ModuleBuilder("Simple",meta.functions);
             builder.visit(tree);
             JastraFile file = builder.getFile();
             Assembler assembler = new Assembler();

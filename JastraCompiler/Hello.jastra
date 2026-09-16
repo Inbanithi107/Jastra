@@ -1,7 +1,14 @@
+GLOBALS {
+    name = "Inbanithi";
+    age = 21;
+    cgpa = 8.37f;
+}
+
 FUN main 0 :
-    STORE R0 17
+    STORE R0 18
     LOAD R0
     CALL checkAge 1
+    CALL aboutMe 0
     RETURN_VOID
 
 FUN checkAge 1 :
@@ -15,5 +22,23 @@ FUN checkAge 1 :
         STORE R2 "you are not eligible to vote"
     END
     LOAD R2
+    PRINT
+    RETURN_VOID
+
+FUN aboutMe 0 :
+    STORE R0 "I'm: "
+    STORE R1 "Age: "
+    STORE R2 "CGPA: "
+    LOAD R2
+    LFC cgpa
+    ADD
+    LOAD R1
+    LFC age
+    ADD
+    LOAD R0
+    LFC name
+    ADD
+    PRINT
+    PRINT
     PRINT
     RETURN_VOID

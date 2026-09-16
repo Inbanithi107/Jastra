@@ -4,9 +4,12 @@ import io.github.inabnithi.jastra.compiler.JastraBaseVisitor;
 import io.github.inabnithi.jastra.compiler.JastraParser;
 import io.github.inbanithi.jastra.assembler.file.JastraFile;
 import io.github.inbanithi.jastra.assembler.function.FunctionBuilder;
+import io.github.inbanithi.jastra.specification.core.Constant;
+import io.github.inbanithi.jastra.specification.core.ConstantType;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ModuleBuilder extends JastraBaseVisitor<Object> {
@@ -17,6 +20,10 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     private Map<String,Integer> functions;
 
+    private Map<String, Integer> constants = new HashMap<>();
+
+    private int constantIndexer;
+
     public ModuleBuilder(String name, Map<String,Integer> map) {
         file = new JastraFile(name);
         functions = map;
@@ -24,6 +31,23 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     public JastraFile getFile(){
         return file;
+    }
+
+    @Override
+    public Object visitConstants(JastraParser.ConstantsContext ctx) {
+        String name = ctx.ID().getText();
+        int id = constantIndexer++;
+        if(ctx.INTEGER()!=null){
+            file.addConstant(new Constant(id, ConstantType.INTEGER, Integer.parseInt(ctx.INTEGER().getText())));
+        }
+        else if(ctx.FLOAT()!=null){
+            file.addConstant(new Constant(id, ConstantType.FLOAT, Float.parseFloat(ctx.FLOAT().getText())));
+        }
+        else if(ctx.STRING()!=null){
+            file.addConstant(new Constant(id, ConstantType.STRING, ctx.STRING().getText().substring(1, ctx.STRING().getText().length()-1)));
+        }
+        constants.put(name, id);
+        return null;
     }
 
     @Override
@@ -44,9 +68,23 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitPopAndStoreinRegisterStatement(JastraParser.PopAndStoreinRegisterStatementContext ctx) {
+        int register = Integer.parseInt(ctx.REGISTER().getText().substring(1));
+        func.popAndStore(register);
+        return null;
+    }
+
+    @Override
     public Object visitLoadStatement(JastraParser.LoadStatementContext ctx) {
         int register = Integer.parseInt(ctx.REGISTER().getText().substring(1));
         func.load(register);
+        return null;
+    }
+
+    @Override
+    public Object visitLoadFromConstantStatement(JastraParser.LoadFromConstantStatementContext ctx) {
+        int id = constants.get(ctx.ID().getText());
+        func.loadFromConst(id);
         return null;
     }
 

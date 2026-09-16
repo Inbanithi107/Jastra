@@ -1,14 +1,20 @@
 grammar Jastra;
 
 program :
-        functionDeclration* EOF;
+        constDeclration? functionDeclration* EOF;
 
 functionDeclration :
         FUN ID INTEGER COLON statement*;
 
+constDeclration: 'GLOBALS' '{' constants* '}';
+
+constants: ID '=' (STRING|INTEGER|FLOAT) ';';
+
 statement :
         storeStatement
+        | popAndStoreinRegisterStatement
         | loadStatement
+        | loadFromConstantStatement
         | printStatement
         | arithmeticStatement
         | compareStatement
@@ -18,7 +24,9 @@ statement :
         | returnVoidStatement;
 
 storeStatement: STORE REGISTER value;
+popAndStoreinRegisterStatement: PSR REGISTER;
 loadStatement: LOAD REGISTER;
+loadFromConstantStatement: LFC ID;
 arithmeticStatement: ADD | SUBTRACT | MULTIPLY | DIVIDE;
 compareStatement: CMP_EQ | CMP_NE | CMP_LT | CMP_LE | CMP_GT | CMP_GE;
 conditionalStatement :
@@ -50,7 +58,9 @@ IF: 'JIZ' | 'JNZ';
 ELSE: 'ELSE';
 END: 'END';
 STORE: 'STORE';
+PSR: 'PSR';
 LOAD: 'LOAD';
+LFC: 'LFC';
 CALL: 'CALL';
 PRINT: 'PRINT';
 RETURN: 'RETURN';
