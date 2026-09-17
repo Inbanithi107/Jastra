@@ -173,6 +173,18 @@ public class FunctionBuilder {
         return this;
     }
 
+    public FunctionBuilder loop(CodeBlock condition, CodeBlock body){
+        String startLabel = newLabel();
+        String endLabel = newLabel();
+        instructions.add(new LabelInstruction(startLabel));
+        condition.build(this);
+        instructions.add(new JumpIfZeroInstruction(endLabel));
+        body.build(this);
+        instructions.add(new JumpInstruction(startLabel));
+        instructions.add(new LabelInstruction(endLabel));
+        return this;
+    }
+
     public JastraFunction returnVoid(){
         instructions.add(new ReturnVoidInstruction());
         return new JastraFunction(name, argCount, instructions, id);
