@@ -32,6 +32,8 @@ public final class OpCode {
 
     public static int RETURN = 0x62;
 
+    public static int CALL_EXTERNAL = 0x63;
+
     public static class Compare {
         public static int CMP_EQ = 0x30;
 

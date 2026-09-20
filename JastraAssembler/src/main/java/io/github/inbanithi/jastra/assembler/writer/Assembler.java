@@ -24,23 +24,26 @@ public class Assembler {
     private static final int VERSION_MINOR = 0;
     private static final int VERSION_PATCH = 0;
 
+    private int mainFunctionId;
+
     public void assemble(JastraFile file) throws IOException {
-        String fileName = file.getName()+".bin";
+        String fileName = file.getName()+".jc";
         out = new DataOutputStream(new FileOutputStream(Paths.get(fileName).toFile()));
-        addHeader();
+        addHeader(file);
         writeConstantPool(file);
         writeFunctionsTable(file);
-        writeEntry();
+        writeEntry(file);
         writeCode(file);
         out.flush();
         out.close();
     }
 
-    private void addHeader() throws IOException {
+    private void addHeader(JastraFile file) throws IOException {
         out.write(MAGIC);
         out.write(VERSION_MAJOR);
         out.write(VERSION_MINOR);
         out.write(VERSION_PATCH);
+        out.writeBoolean(file.isStandAlone);
     }
 
     private void writeConstantPool(JastraFile file) throws IOException {
@@ -66,6 +69,9 @@ public class Assembler {
         out.writeShort(functions.size());
         for(int i=0;i<functions.size();i++){
             JastraFunction function = functions.get(i);
+            if(function.getName().equals("main")){
+                mainFunctionId = function.getId();
+            }
             out.writeShort(function.getId());
             out.write(function.getName().length());
             out.write(function.getName().getBytes(StandardCharsets.UTF_8));
@@ -75,12 +81,14 @@ public class Assembler {
         }
     }
 
-    private void writeEntry() throws IOException {
-        out.write(ControlInstruction.ENTRY);
-        out.write(OpCode.CALL);
-        out.write(0);
-        out.write(0);
-        out.write(ControlInstruction.HALT);
+    private void writeEntry(JastraFile file) throws IOException {
+        if (file.isStandAlone) {
+            out.write(ControlInstruction.ENTRY);
+            out.write(OpCode.CALL);
+            out.write(mainFunctionId);
+            out.write(0);
+            out.write(ControlInstruction.HALT);
+        }
     }
 
     private void writeCode(JastraFile file) throws IOException {

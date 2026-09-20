@@ -2,6 +2,7 @@ package io.github.inbanithi.jastra.assembler.function;
 
 import io.github.inbanithi.jastra.assembler.block.CodeBlock;
 import io.github.inbanithi.jastra.assembler.instruction.AddInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.CallExternalInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.CallInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.DivisionInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.compare.CompareEqualInstruction;
@@ -115,6 +116,11 @@ public class FunctionBuilder {
 
     public FunctionBuilder call(int id, int argCount){
         instructions.add(new CallInstruction(id, argCount));
+        return this;
+    }
+
+    public FunctionBuilder callExternal(int moduleId, int funId, int argCount){
+        instructions.add(new CallExternalInstruction(moduleId,funId,argCount));
         return this;
     }
 

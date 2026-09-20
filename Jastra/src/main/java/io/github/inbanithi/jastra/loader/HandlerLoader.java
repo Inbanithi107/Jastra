@@ -1,6 +1,7 @@
 package io.github.inbanithi.jastra.loader;
 
 import io.github.inbanithi.jastra.handler.AddHandler;
+import io.github.inbanithi.jastra.handler.CallExternalHandler;
 import io.github.inbanithi.jastra.handler.CallHandler;
 import io.github.inbanithi.jastra.handler.DivisionHandler;
 import io.github.inbanithi.jastra.handler.EntryHandler;
@@ -32,9 +33,10 @@ import io.github.inbanithi.jastra.specification.core.OpCode;
 public class HandlerLoader {
 
     public static Handler[] getHandlers(){
-        Handler[] handlers = new Handler[255];
+        Handler[] handlers = new Handler[256];
         handlers[ControlInstruction.ENTRY] = new EntryHandler();
         handlers[OpCode.CALL] = new CallHandler();
+        handlers[OpCode.CALL_EXTERNAL] = new CallExternalHandler();
         handlers[ControlInstruction.HALT] = new HaltHandler();
         handlers[OpCode.LOAD] = new LoadHandler();
         handlers[OpCode.LOAD_FROM_CONST] = new LoadFromConstHandler();

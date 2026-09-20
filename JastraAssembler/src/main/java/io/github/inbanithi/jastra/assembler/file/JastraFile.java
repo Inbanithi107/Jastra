@@ -25,6 +25,8 @@ public class JastraFile {
 
     private boolean layoutCalculated = false;
 
+    public boolean isStandAlone = true;
+
     public JastraFile(String name) {
         this.name = name;
         this.functions = new ArrayList<>();

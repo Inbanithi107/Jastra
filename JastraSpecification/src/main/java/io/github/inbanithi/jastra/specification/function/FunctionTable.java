@@ -19,4 +19,13 @@ public class FunctionTable {
         table.put(id, function);
     }
 
+    public JastraFunction getFunctionByName(String name){
+        for(JastraFunction fun : table.values()){
+            if(fun.getName().equals(name)){
+                return fun;
+            }
+        }
+        throw new RuntimeException("The required function "+name+" is not available in the module");
+    }
+
 }

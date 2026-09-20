@@ -16,7 +16,7 @@ import io.github.inbanithi.jastra.specification.function.JastraFunction;
 
 public class ApplicationModuleLoader implements ModuleLoader {
 
-    private String extension = ".bin";
+    private String extension = ".jc";
 
     private byte[] MAGIC = {'J', 'V', 'M', 'J'};
 
@@ -27,7 +27,7 @@ public class ApplicationModuleLoader implements ModuleLoader {
     private ByteArrayInputStream bais;
 
     @Override
-    public io.github.inbanithi.jastra.specification.core.Module load(String name, Path path) {
+    public Module load(String name, Path path) {
         Path file = path.resolve(name+extension).normalize();
         //System.out.println(file);
         byte[] code;
@@ -39,11 +39,24 @@ public class ApplicationModuleLoader implements ModuleLoader {
         bais = new ByteArrayInputStream(code);
         in = new DataInputStream(bais);
         verifyHeader();
+        boolean isStandAlone;
+        try {
+            isStandAlone = in.readBoolean();
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
         ConstantPoolTable constants = buildConstantPool();
         FunctionTable functions = buildFunctionTable();
-        int entry = code.length - bais.available()+1;
-        int codeSectionOffset = entry+4;
-        //System.out.println(entry+"-"+code[entry]+"-----"+codeSectionOffset+"-"+code[codeSectionOffset]);
+        int entry = -1;
+        int codeSectionOffset;
+        if(isStandAlone){
+            entry = code.length - bais.available()+1;
+            codeSectionOffset = entry+4;
+            //System.out.println(entry+"-"+code[entry]+"-----"+codeSectionOffset+"-"+code[codeSectionOffset]);
+        }
+        else{
+            codeSectionOffset = code.length - bais.available();
+        }
         try {
             in.close();
         } catch (IOException e) {

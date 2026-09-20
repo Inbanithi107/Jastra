@@ -26,13 +26,18 @@ public class JastraVirtualMachine extends Vm {
     public JastraVirtualMachine(String name) {
         root = Paths.get("").normalize().toAbsolutePath();
         this.loader = new ApplicationModuleLoader();
-        this.mainModule = loadModule(name);
         this.modules = new HashMap<>();
+        this.mainModule = loadModule(name);
         modules.put(name, mainModule);
     }
 
-    private Module loadModule(String name){
-        return loader.load(name, root);
+    public Module loadModule(String name){
+        if(modules.containsKey(name)){
+            return modules.get(name);
+        }
+        Module module = loader.load(name, root);
+        modules.put(name, module);
+        return module;
     }
 
     @Override
