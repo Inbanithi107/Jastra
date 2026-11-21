@@ -14,7 +14,7 @@ public class CallExternalHandler extends Handler {
         String name = (String) frame.module.constantPoolTable.getConstant(moduleId).value();
         String functionName = (String) frame.module.constantPoolTable.getConstant(functionId).value();
         Module module = vm.loadModule(name);
-        JastraFunction function = module.functionTable.getFunctionByName(functionName);
+        JastraFunction function = module.functionTable.getFunctionByName(functionName, module.getName());
         Frame callFrame = new Frame(module, function, module.codeSectionOffset+function.getCodeOffset());
         for(int i=argCount-1;i>=0;i--){
             callFrame.registers[i] = frame.operandStack.pop();

@@ -162,6 +162,35 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitLoopStatement(JastraParser.LoopStatementContext ctx) {
+        if(ctx.initStatements!=null){
+            for(JastraParser.StatementContext statement : ctx.initStatements){
+                visit(statement);
+            }
+        }
+        func.loop(
+                (c)-> {
+                    for(JastraParser.StatementContext statement : ctx.condStatements){
+                        visit(statement);
+                    }
+                    return c;
+                },
+                (b)->{
+                    for(JastraParser.StatementContext statement : ctx.bodyStatements){
+                        visit(statement);
+                    }
+                    if(ctx.updateStatemts!=null){
+                        for(JastraParser.StatementContext statement : ctx.updateStatemts){
+                            visit(statement);
+                        }
+                    }
+                    return b;
+                }
+        );
+        return null;
+    }
+
+    @Override
     public Object visitPrintStatement(JastraParser.PrintStatementContext ctx) {
         func.print();
         return null;
@@ -172,6 +201,15 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
         String name = ctx.ID().getText();
         int argCount = Integer.parseInt(ctx.INTEGER().getText());
         func.call(functions.get(name), argCount);
+        return null;
+    }
+
+    @Override
+    public Object visitCallExternalStatement(JastraParser.CallExternalStatementContext ctx) {
+        String moduleName = ctx.ID(0).getText();
+        String functionName = ctx.ID(1).getText();
+        int argCount = Integer.parseInt(ctx.INTEGER().getText());
+        func.callExternal(constants.get(moduleName), constants.get(functionName), argCount);
         return null;
     }
 

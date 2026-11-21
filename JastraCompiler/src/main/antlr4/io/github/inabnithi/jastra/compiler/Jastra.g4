@@ -21,7 +21,9 @@ statement :
         | arithmeticStatement
         | compareStatement
         | conditionalStatement
+        | loopStatement
         | callStatement
+        | callExternalStatement
         | returnStatement
         | returnVoidStatement;
 
@@ -36,8 +38,16 @@ compareStatement: CMP_EQ | CMP_NE | CMP_LT | CMP_LE | CMP_GT | CMP_GE;
 conditionalStatement :
                     IF COLON ifStatements+=statement* END
                     | IF COLON ifStatements+=statement* ELSE COLON elseStatements+=statement* END;
+loopStatement :
+            LOOP COLON
+                (('INIT') COLON initStatements+=statement*)?
+                ('COND') COLON condStatements+=statement*
+                ('BODY') COLON bodyStatements+=statement*
+                (('UPD') COLON updateStatemts+=statement*) ?
+                END;
 printStatement: PRINT;
 callStatement: CALL ID INTEGER;
+callExternalStatement: CALLE ID ID INTEGER;
 returnStatement: RETURN INTEGER;
 returnVoidStatement: RETURN_VOID;
 
@@ -60,6 +70,7 @@ CMP_GT: 'CMP_GT';
 CMP_GE: 'CMP_GE';
 IF: 'JIZ' | 'JNZ';
 ELSE: 'ELSE';
+LOOP: 'LOOP';
 END: 'END';
 STORE: 'STORE';
 PSR: 'PSR';
@@ -68,6 +79,7 @@ LFC: 'LFC';
 PUSH: 'PUSH';
 POP: 'POP';
 CALL: 'CALL';
+CALLE: 'CALLE';
 PRINT: 'PRINT';
 RETURN: 'RETURN';
 RETURN_VOID: 'RETURN_VOID';

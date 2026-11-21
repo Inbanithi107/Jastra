@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Jastra {
 
     public static void main(String[] args) throws IOException {
-        String filename = args[0]+".jc";
+        String filename = args[0];
         JastraVirtualMachine jvm = new JastraVirtualMachine(filename);
         jvm.execute(null);
     }

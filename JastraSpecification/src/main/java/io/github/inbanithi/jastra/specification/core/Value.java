@@ -38,6 +38,10 @@ public final class Value {
         return new Value(Type.CHARACTER, value);
     }
 
+    public static Value ofArray(Object object){
+        return new Value(Type.ARRAY, object);
+    }
+
     public static Value nullValue() {
         return new Value(Type.NULL, null);
     }

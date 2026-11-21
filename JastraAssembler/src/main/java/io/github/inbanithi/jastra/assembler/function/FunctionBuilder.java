@@ -5,6 +5,9 @@ import io.github.inbanithi.jastra.assembler.instruction.AddInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.CallExternalInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.CallInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.DivisionInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.array.LoadArrayValueInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.array.NewArrayInstruction;
+import io.github.inbanithi.jastra.assembler.instruction.array.StoreArrayValueInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.compare.CompareEqualInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.compare.CompareGreaterThenInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.compare.CompareGreaterThenOrEqualInstruction;
@@ -26,6 +29,7 @@ import io.github.inbanithi.jastra.assembler.instruction.StoreInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.SubtractInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.operandstack.PopInstruction;
 import io.github.inbanithi.jastra.assembler.instruction.operandstack.PushInstruction;
+import io.github.inbanithi.jastra.specification.core.Type;
 import io.github.inbanithi.jastra.specification.core.Value;
 import io.github.inbanithi.jastra.specification.function.JastraFunction;
 import io.github.inbanithi.jastra.specification.instruction.Instruction;
@@ -71,6 +75,21 @@ public class FunctionBuilder {
 
     public FunctionBuilder popAndStore(int register){
         instructions.add(new PopStoreRegisterInstruction(register));
+        return this;
+    }
+
+    public FunctionBuilder newArray(Type type) {
+        instructions.add(new NewArrayInstruction(type));
+        return this;
+    }
+
+    public FunctionBuilder loadArrayValue() {
+        instructions.add(new LoadArrayValueInstruction());
+        return this;
+    }
+
+    public FunctionBuilder storeArrayValue() {
+        instructions.add(new StoreArrayValueInstruction());
         return this;
     }
 

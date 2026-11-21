@@ -9,7 +9,8 @@ public enum Type {
     BOOLEAN(0x84),
     CHARACTER(0x85),
     STRING(0x86),
-    NULL(0x87);
+    NULL(0x87),
+    ARRAY(0x88);
 
     private final int code;
 

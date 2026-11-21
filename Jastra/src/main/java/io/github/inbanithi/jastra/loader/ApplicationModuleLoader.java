@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+
 import io.github.inbanithi.jastra.specification.core.Constant;
 import io.github.inbanithi.jastra.specification.core.ConstantType;
 import io.github.inbanithi.jastra.specification.core.Module;
@@ -62,6 +64,7 @@ public class ApplicationModuleLoader implements ModuleLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(Arrays.toString(code));
         return new Module(name, code, functions, constants, entry, codeSectionOffset);
     }
 

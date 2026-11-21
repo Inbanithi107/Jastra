@@ -7,6 +7,9 @@ import io.github.inbanithi.jastra.handler.DivisionHandler;
 import io.github.inbanithi.jastra.handler.EntryHandler;
 import io.github.inbanithi.jastra.handler.HaltHandler;
 import io.github.inbanithi.jastra.handler.Handler;
+import io.github.inbanithi.jastra.handler.array.LoadArrayValueHandler;
+import io.github.inbanithi.jastra.handler.array.NewArrayHandler;
+import io.github.inbanithi.jastra.handler.array.StoreArrayValueHandler;
 import io.github.inbanithi.jastra.handler.compare.CompareEqualHandler;
 import io.github.inbanithi.jastra.handler.compare.CompareGreaterThenHandler;
 import io.github.inbanithi.jastra.handler.compare.CompareGreaterThenOrEqualHandler;
@@ -54,6 +57,7 @@ public class HandlerLoader {
         handlers[OpCode.RETURN] = new ReturnHandler();
         getCompareHandler(handlers);
         getOperandStackHandler(handlers);
+        getArrayHandler(handlers);
         return handlers;
     }
 
@@ -69,6 +73,12 @@ public class HandlerLoader {
     public static void getOperandStackHandler(Handler[] handlers){
         handlers[OpCode.OperandStack.PUSH] = new PushHandler();
         handlers[OpCode.OperandStack.POP] = new PopHandler();
+    }
+
+    public static void getArrayHandler(Handler[] handlers){
+        handlers[OpCode.Array.NEW_ARRAY] = new NewArrayHandler();
+        handlers[OpCode.Array.STORE_VALUE] = new StoreArrayValueHandler();
+        handlers[OpCode.Array.LOAD_VALUE] = new LoadArrayValueHandler();
     }
 
 }

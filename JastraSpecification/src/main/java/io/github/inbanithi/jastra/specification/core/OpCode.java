@@ -54,4 +54,14 @@ public final class OpCode {
         public static int POP = 0x13;
     }
 
+    public static class Array {
+
+        public static int NEW_ARRAY = 0x03;
+
+        public static int STORE_VALUE = 0x04;
+
+        public static int LOAD_VALUE = 0x05;
+
+    }
+
 }
