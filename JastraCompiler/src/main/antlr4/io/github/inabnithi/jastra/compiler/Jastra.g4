@@ -86,7 +86,7 @@ RETURN_VOID: 'RETURN_VOID';
 REGISTER: 'R' ([0-9]| [1-9][0-9]| '1'[0-9][0-9]| '2'[0-4][0-9]| '25'[0-5]);
 BOOLEAN : 'true'| 'false';
 DOUBLE: [0-9]+ '.' [0-9]+;
-FLOAT: [0-9]+ '.' [0-9]+ 'f';
+FLOAT: [0-9]+ '.' [0-9]+ 'F';
 LONG: [0-9]+ 'L';
 INTEGER: [0-9]+;
 CHARACTER: '\'' . '\'';

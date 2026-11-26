@@ -26,4 +26,29 @@ FUN small 1 :
             PSR R3
     END
     RETURN_VOID
+FUN tablePrinter 2 :
+    STORE R2 1
+    LOOP:
+        COND:
+            LOAD R2 LOAD R1 CMP_LE
+        BODY:
+            LOAD R0
+            PUSH " X "
+            ADD
+            LOAD R2
+            ADD
+            PUSH " = "
+            ADD
+            LOAD R0
+            LOAD R2
+            MUL
+            ADD
+            PRINT
+        UPD:
+            LOAD R2
+            PUSH 1
+            ADD
+            PSR R2
+    END
+    RETURN_VOID
 

@@ -9,9 +9,9 @@ import io.github.inbanithi.jastra.types.JastraArray;
 public class StoreArrayValueHandler extends Handler {
     @Override
     public void execute(JastraVirtualMachine vm, Frame frame) {
-        JastraArray array = (JastraArray) frame.operandStack.pop().raw();
-        int index = frame.operandStack.pop().asInt();
         Value value = frame.operandStack.pop();
+        int index = frame.operandStack.pop().asInt();
+        JastraArray array = (JastraArray) frame.operandStack.pop().raw();
         array.setValue(index, value);
     }
 }

@@ -235,12 +235,14 @@ public class ModuleBuilder extends JastraBaseVisitor<Object> {
 
     @Override
     public Object visitLongLiteral(JastraParser.LongLiteralContext ctx) {
-        return Value.ofLong(Long.parseLong(ctx.LONG().getText()));
+        String text = ctx.LONG().getText();
+        return Value.ofLong(Long.parseLong(text.substring(0, text.length()-1)));
     }
 
     @Override
     public Object visitFloatLiteral(JastraParser.FloatLiteralContext ctx) {
-        return Value.ofFloat(Float.parseFloat(ctx.FLOAT().getText()));
+        String text = ctx.FLOAT().getText();
+        return Value.ofFloat(Float.parseFloat(text.substring(0, text.length()-1)));
     }
 
     @Override

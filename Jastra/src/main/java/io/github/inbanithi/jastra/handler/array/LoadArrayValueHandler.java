@@ -8,8 +8,8 @@ import io.github.inbanithi.jastra.types.JastraArray;
 public class LoadArrayValueHandler extends Handler {
     @Override
     public void execute(JastraVirtualMachine vm, Frame frame) {
-        JastraArray array = (JastraArray) frame.operandStack.pop().raw();
         int index = frame.operandStack.pop().asInt();
+        JastraArray array = (JastraArray) frame.operandStack.pop().raw();
         frame.operandStack.push(array.getValue(index));
     }
 }

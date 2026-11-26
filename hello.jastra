@@ -4,6 +4,11 @@ GLOBALS {
     cgpa = 8.37f;
     lib = "simple";
     func = "small";
+    table = "tablePrinter";
+    array = "array";
+    create = "create";
+    get = "get";
+    set = "set";
 }
 
 FUN main 0 :
@@ -14,7 +19,10 @@ FUN main 0 :
     PUSH 'D'
     ADD
     PRINT
-    CALL checke 0
+    PUSH 5
+    PUSH 20
+    CALLE lib table 2
+    CALL arr 0
     RETURN_VOID
 
 FUN checkAge 1 :
@@ -51,4 +59,20 @@ FUN aboutMe 0 :
 FUN checke 0:
     PUSH 10
     CALLE lib func 1
+    RETURN_VOID
+
+FUN arr 0 :
+    STORE R0 10
+    PUSH "double"
+    LOAD R0
+    CALLE array create 2
+    PSR R1
+    LOAD R1
+    PUSH 5
+    PUSH 36000.0
+    CALLE array set 3
+    LOAD R1
+    PUSH 5
+    CALLE array get 2
+    PRINT
     RETURN_VOID
