@@ -1,0 +1,33 @@
+package io.github.inbanithi.jastra.specification.core;
+
+public enum Type {
+
+    INT(0x80),
+    LONG(0x81),
+    FLOAT(0x82),
+    DOUBLE(0x83),
+    BOOLEAN(0x84),
+    CHARACTER(0x85),
+    STRING(0x86),
+    NULL(0x87),
+    ARRAY(0x88);
+
+    private final int code;
+
+    Type(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public static Type from(int code){
+        for(Type type : Type.values()){
+            if(type.getCode()==code){
+                return type;
+            }
+        }
+        return null;
+    }
+}
