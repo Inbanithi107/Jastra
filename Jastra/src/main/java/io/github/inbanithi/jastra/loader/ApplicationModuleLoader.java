@@ -64,7 +64,6 @@ public class ApplicationModuleLoader implements ModuleLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(Arrays.toString(code));
         return new Module(name, code, functions, constants, entry, codeSectionOffset);
     }
 

@@ -17,8 +17,9 @@ import java.nio.file.Paths;
 
 public class JastraCompiler {
 
-    public static void main() {
-        try (FileReader reader = new FileReader(Paths.get("hello.jastra").toFile())){
+    public static void main(String[] args) {
+        String filename = args[0];
+        try (FileReader reader = new FileReader(Paths.get(filename).toFile())) {
             String source = reader.readAllAsString();
             CharStream input = CharStreams.fromString(source);
             JastraLexer lexer = new JastraLexer(input);
@@ -27,15 +28,14 @@ public class JastraCompiler {
             ParseTree tree = parser.program();
             MetaBuilder meta = new MetaBuilder();
             meta.visit(tree);
-            ModuleBuilder builder = new ModuleBuilder("hello",meta.functions);
+            ModuleBuilder builder = new ModuleBuilder(filename.substring(0, filename.lastIndexOf(".")), meta.functions);
             builder.visit(tree);
             JastraFile file = builder.getFile();
             Assembler assembler = new Assembler();
             assembler.assemble(file);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("compiled successfully");
     }
 
 }
